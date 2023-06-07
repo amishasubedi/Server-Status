@@ -1,28 +1,26 @@
 <div class="container">
+  <app-cockpit (serverCreated)="onAddedServer($event)" (bluePrintCreated)="onAddedBluePrint($event)">
+  </app-cockpit>
   <div class="row">
     <div class="col-xs-12">
-      <p>Add new Servers or blueprints!</p>
-      <label>Server Name</label>
-      <input type="text" class="form-control" [(ngModel)]="newServerName">
-      <label>Server Content</label>
-      <input type="text" class="form-control" [(ngModel)]="newServerContent">
-      <br>
-      <button class="btn btn-primary" style="margin-right: 10px" (click)="onAddServer()">Add Server</button>
-      <button class="btn btn-primary" (click)="onAddBlueprint()">Add Server Blueprint</button>
-    </div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="panel panel-default" *ngFor="let element of serverElements">
-        <div class="panel-heading">{{ element.name }}</div>
-        <div class="panel-body">
-          <p>
-            <strong *ngIf="element.type === 'server'" style="color: red">{{ element.content }}</strong>
-            <em *ngIf="element.type === 'blueprint'">{{ element.content }}</em>
-          </p>
-        </div>
-      </div>
+
+      <!--parent component iterating over data and passing it to the child component for rendering.-->
+      <app-server-element *ngFor="let serverElement of serverElements" [serverElement]="serverElement">
+
+      </app-server-element>
+
     </div>
   </div>
 </div>
+
+<!--
+  After the cockpit component is displayed, this line
+  <app-server-element *ngFor="let serverElement of serverElements" [serverElement]="serverElement">
+  refers that Server Element component is a child component that is being repeated using the *ngFor directive.
+  Within the app-server-element component, it expects an input property called 'serverElements' ,array in the parent
+  component (AppComponent), and creates an instance of the app-server element component for each element in the array.  
+
+
+  serverCreated is a custom event,
+  so once custom events occur on cockpit component,
+-->
