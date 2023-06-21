@@ -12,7 +12,8 @@ import {
   OnInit,
   SimpleChanges,
   ViewEncapsulation,
-  ViewChild
+  ViewChild,
+  ContentChild
 } from '@angular/core';
 
 @Component({
@@ -39,7 +40,11 @@ export class ServerElementComponent implements
     content: string
   }
 
+  // ViewChild - to access a single child component or element directly included in the parent component's template (also called local reference #)
   @ViewChild('heading', { static: true }) header: ElementRef;
+
+  // ContentChild - to access a single child component or element projected into the parent component's template using <ng-content></ng-content>.
+  @ContentChild('contentParagraph', { static: true }) paragraph: ElementRef;
 
 
   constructor() {
@@ -58,6 +63,8 @@ export class ServerElementComponent implements
 
     // expecting empty -  can't check value of element because it's not rendered yet
     console.log("Text content: " + this.header.nativeElement.textContent);
+    console.log("Text content of paragraph: " + this.paragraph.nativeElement.textContent);
+
   }
 
   // called during every detection run
@@ -75,9 +82,12 @@ export class ServerElementComponent implements
     console.log("ngAfterContentChecked called");
   }
 
+  // called after the component's view has been initialized
   ngAfterViewInit() {
     console.log("ngAfterViewInit called");
     console.log("Text content: " + this.header.nativeElement.textContent); // expecting test1
+    console.log("Text content of paragraph: " + this.paragraph.nativeElement.textContent); // expecting test1S
+
   }
 
   // alled everytime the view (and child views) has been ngAfterViewChecked
