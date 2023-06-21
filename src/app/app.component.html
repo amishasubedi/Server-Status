@@ -3,9 +3,19 @@
   </app-cockpit>
   <div class="row">
     <div class="col-xs-12">
+      <hr>
+      <button style="margin-right: 10px" class="btn btn-primary" (click)="onChangeFirst() ">Change First
+        Element</button>
+      <button class="btn btn-danger" (click)="onDestroyFirst()">Destroy first component</button>
+      <hr>
 
       <!--parent component iterating over data and passing it to the child component for rendering.-->
       <app-server-element *ngFor="let serverElement of serverElements" [serverElement]="serverElement">
+
+        <p>
+          <strong *ngIf="serverElement.type === 'server'" style="color: red">{{ serverElement.content }}</strong>
+          <em *ngIf="serverElement.type === 'blueprint'">{{ serverElement.content }}</em>
+        </p>
 
       </app-server-element>
 
